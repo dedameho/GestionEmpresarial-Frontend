@@ -1,0 +1,68 @@
+<div class="p-4 bg-white shadow rounded-md">
+  <table class="min-w-full leading-normal">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" class="px-2 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+          {{ column.title }}
+        </th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of paginatedData; let i = index">
+        <td *ngFor="let column of columns" class="px-2 py-2 border-b border-gray-200 bg-white text-sm">
+          <ng-container *ngIf="column.isHTML; else normalCell">
+            <div [innerHTML]="getSanitizedHtml(row[column.key])"></div>
+          </ng-container>
+          <ng-template #normalCell>
+            <ng-container *ngIf="column.isDate; else normalValue">
+              {{ row[column.key] | date:'dd-MM-yyyy' }}
+            </ng-container>
+            <ng-template #normalValue>
+              {{ row[column.key] }}
+            </ng-template>
+          </ng-template>
+        </td>
+        <td class="px-1 py-1 border-b border-gray-200 bg-white text-sm text-right">
+          <div class="relative inline-block text-left">
+            <button (click)="toggleContextMenu(i)" class="inline-flex justify-center w-full rounded-md  px-2 py-1 bg-white text-sm font-medium text-gray-700 hover:bg-gray-200" type="button">
+              <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+            </button>
+            <div (mouseleave)="hideProductsContextMenu()" *ngIf="activeRowIndex === i" class="origin-top-right z-10 absolute right-0 mt-1 w-36 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5">
+              <div class="py-1">
+                <ng-container *ngFor="let menuItem of contextMenuItems">
+                  <button (click)="onContextMenuClick(menuItem.action, row)" class="w-full text-left px-2 py-1 text-sm text-gray-700 hover:bg-gray-200">
+                    <i class="fa-solid {{menuItem.icon}} mr-2"></i>{{ menuItem.label }}
+                  </button>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Pagination -->
+  <div class="flex justify-between items-center mt-2">
+    <div>
+      Mostrando {{ getStartIndex() }} a {{ getEndIndex() }} de {{ data.length }}
+    </div>
+    <div class="flex space-x-2">
+      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="px-2 py-2 bg-gray-200 text-gray-600 rounded disabled:opacity-50">
+        <i class="fa-solid fa-angle-left"></i>
+      </button>
+      <button *ngFor="let page of pages" 
+              (click)="onPageChange(page)" 
+              [class.bg-blue-500]="currentPage === page" 
+              [class.text-white]="currentPage === page" 
+              [class.bg-gray-200]="currentPage !== page"
+              class="px-2 py-2  text-gray-600 rounded">
+        {{ page }}
+      </button>
+      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="px-2 py-2 bg-gray-200 text-gray-600 rounded disabled:opacity-50">
+        <i class="fa-solid fa-angle-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

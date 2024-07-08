@@ -1,0 +1,157 @@
+<div class="container mx-auto p-8 relative bg-gray-100">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Registrar Cliente</h2>
+    <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800" aria-label="Cerrar" (click)="close(false)">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <div class="flex justify-between">
+            <div class="w-2/3 mr-1">
+                <div class="">
+                    <label for="nombre" class="text-sm font-medium text-gray-700">
+                        Nombre
+                    </label>
+                    <div class="relative mt-1">
+                        <input type="text" id="nombre" formControlName="nombre"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            [ngClass]="{ 'border-red-500': clientForm.controls['nombre'].invalid && clientForm.controls['nombre'].touched }">
+                        <div *ngIf="clientForm.controls['nombre'].invalid && clientForm.controls['nombre'].touched"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="w-1/3 ml-1">
+                <div class="">
+                    <label for="nit" class="text-sm font-medium text-gray-700">
+                        NIT
+                    </label>
+                    <div class="relative mt-1">
+                        <input type="text" id="nit" formControlName="nit"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            [ngClass]="{ 'border-red-500': clientForm.controls['nit'].invalid && clientForm.controls['nit'].touched }">
+                        <div *ngIf="clientForm.controls['nit'].invalid && clientForm.controls['nit'].touched"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="clientForm.controls['nit'].invalid && clientForm.controls['nit'].touched"
+            class="text-red-500 text-xs mt-1">
+            NIT es requerido y debe tener exactamente 11 caracteres.
+        </div>
+        <div *ngIf="clientForm.controls['nombre'].invalid && clientForm.controls['nombre'].touched"
+            class="text-red-500 text-xs mt-1">
+            Nombre es requerido y debe tener máximo 50 caracteres.
+        </div>
+
+
+        <div class="flex">
+            <div class="w-1/2 mr-1">
+                <div class="flex flex-col">
+                    <label for="direccion" class="text-sm font-medium text-gray-700">
+                        Dirección
+                    </label>
+                    <div class="relative mt-1">
+                        <input type="text" id="direccion" formControlName="direccion"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            [ngClass]="{ 'border-red-500': clientForm.controls['direccion'].invalid && clientForm.controls['direccion'].touched }">
+                        <div *ngIf="clientForm.controls['direccion'].invalid && clientForm.controls['direccion'].touched"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="w-1/2 ml-1">
+                <div class="flex flex-col">
+                    <label for="ciudad" class="text-sm font-medium text-gray-700">
+                        Ciudad
+                    </label>
+                    <div class="relative mt-1">
+                        <input type="text" id="ciudad" formControlName="ciudad"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            [ngClass]="{ 'border-red-500': clientForm.controls['ciudad'].invalid && clientForm.controls['ciudad'].touched }">
+                        <div *ngIf="clientForm.controls['ciudad'].invalid && clientForm.controls['ciudad'].touched"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="clientForm.controls['ciudad'].invalid && clientForm.controls['ciudad'].touched"
+            class="text-red-500 text-xs mt-1">
+            Ciudad es requerida y debe tener máximo 50 caracteres.
+        </div>
+        <div *ngIf="clientForm.controls['direccion'].invalid && clientForm.controls['direccion'].touched"
+            class="text-red-500 text-xs mt-1">
+            Dirección es requerida y debe tener máximo 50 caracteres.
+        </div>
+
+
+        <div class="flex">
+            <div class="w-1/2 mr-1">
+                <div class="flex flex-col">
+                    <label for="telefono" class="text-sm font-medium text-gray-700">
+                        Teléfono
+                    </label>
+                    <div class="relative mt-1">
+                        <input type="text" id="telefono" formControlName="telefono"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            [ngClass]="{ 'border-red-500': clientForm.controls['telefono'].invalid && clientForm.controls['telefono'].touched }">
+                        <div *ngIf="clientForm.controls['telefono'].invalid && clientForm.controls['telefono'].touched"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="w-1/2 ml-1">
+                <div class="flex flex-col">
+                    <label for="email" class="text-sm font-medium text-gray-700">
+                        Email
+                    </label>
+                    <div class="relative mt-1">
+                        <input type="email" id="email" formControlName="email"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            [ngClass]="{ 'border-red-500': clientForm.controls['email'].invalid && clientForm.controls['email'].touched }">
+                        <div *ngIf="clientForm.controls['email'].invalid && clientForm.controls['email'].touched"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="clientForm.controls['telefono'].invalid && clientForm.controls['telefono'].touched"
+            class="text-red-500 text-xs mt-1">
+            Teléfono debe tener exactamente 10 caracteres.
+        </div>
+        <div *ngIf="clientForm.controls['email'].invalid && clientForm.controls['email'].touched"
+            class="text-red-500 text-xs mt-1">
+            Email debe ser válido y tener máximo 50 caracteres.
+        </div>
+
+
+        <div class="flex justify-center">
+            <button type="submit" [disabled]="!clientForm.valid"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md mt-4 disabled:bg-gray-400">
+                Registrar Cliente
+            </button>
+        </div>
+    </form>
+</div>

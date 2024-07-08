@@ -1,0 +1,29 @@
+<div class="container mx-auto p-4">
+    <form [formGroup]="filterForm" class="flex justify-end space-x-4">
+        <div class="flex flex-col">
+            <label for="nombre" class="text-sm font-medium text-gray-700">Nombre</label>
+            <input type="text" id="nombre" formControlName="nombre"
+                class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="flex flex-col">
+            <label for="nit" class="text-sm font-medium text-gray-700">NIT</label>
+            <input type="text" id="nit" formControlName="nit"
+                class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="flex flex-col">
+            <label for="ciudad" class="text-sm font-medium text-gray-700">Ciudad</label>
+            <input type="text" id="ciudad" formControlName="ciudad"
+                class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="flex items-end">
+            <button type="reset" class="px-4 py-2 bg-blue-600 text-white rounded-md">Limpiar</button>
+        </div>
+    </form>
+</div>
+
+<button (click)="createClientDialog()" type="button" class="fixed bottom-4 right-4 bg-green-600 text-white rounded-full p-3 shadow-lg hover:bg-green-700 focus:outline-none">
+    Nuevo
+</button>
+
+<app-table [columns]="columns" [data]="data" [contextMenuItems]="contextMenuItems" [itemsPerPage]="10"
+    [maxPageButtons]="5">></app-table>

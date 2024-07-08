@@ -1,0 +1,66 @@
+<div class="container mx-auto p-4">
+    <form [formGroup]="cotizacionForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div class="flex gap-4">
+        <div class="w-2/5">
+          <label for="clienteId" class="text-sm font-medium text-gray-700">Cliente</label>
+          <select id="clienteId" formControlName="clienteId"
+            class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <option *ngFor="let cliente of clientes" [value]="cliente.id">{{ cliente.nombre }}</option>
+          </select>
+          <div *ngIf="cotizacionForm.get('clienteId')?.invalid && (cotizacionForm.get('clienteId')?.dirty || cotizacionForm.get('clienteId')?.touched)">
+            <small class="text-red-500" *ngIf="cotizacionForm.get('clienteId')?.errors?.['required']">Cliente requerido</small>
+          </div>
+        </div>
+        <div class="w-1/5">
+          <label for="subtotal" class="text-sm font-medium text-gray-700">Subtotal</label>
+          <input type="text" id="subtotal" formControlName="subtotal"
+                 class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
+        </div>
+        <div class="w-1/5">
+          <label for="iva" class="text-sm font-medium text-gray-700">IVA</label>
+          <input type="text" id="iva" formControlName="iva"
+                 class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
+        </div>
+        <div class="w-1/5">
+          <label for="total" class="text-sm font-medium text-gray-700">Total</label>
+          <input type="text" id="total" formControlName="total"
+                 class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
+        </div>
+      </div>
+      <div class=" mb-8 gap-4">
+        <ng-container formArrayName="detalles">
+          <div *ngFor="let detalle of detalles.controls; let i = index" [formGroupName]="i" class="w-full gap-4">
+            <div class="w-full flex flex-col md:flex-row md:gap-4">
+              <div class="w-3/5">
+                <label class="text-sm font-medium text-gray-700">Producto</label>
+                <select formControlName="productoId" (change)="productChange(i)"
+                        class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <option *ngFor="let producto of productos" [value]="producto.id">{{ producto.nombre }}</option>
+                </select>
+                <div *ngIf="detalle.get('productoId')?.invalid && (detalle.get('productoId')?.dirty || detalle.get('productoId')?.touched)">
+                  <small class="text-red-500" *ngIf="detalle.get('productoId')?.errors?.['required']">Producto requerido</small>
+                </div>
+              </div>
+              <div class="w-1/5 mt-2 md:mt-0">
+                <label class="text-sm font-medium text-gray-700">Cantidad</label>
+                <input type="number" formControlName="cantidad"
+                       class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              </div>
+              <div class="w-1/5 mt-2 md:mt-0">
+                <label class="text-sm font-medium text-gray-700">Precio</label>
+                <input type="text" formControlName="precio"
+                       class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
+              </div>
+              <button type="button" (click)="removeDetalle(i)" class="mt-4 bg-red-500 text-white px-3 py-2 rounded-md">Eliminar</button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="flex justify-center space-x-4">
+        <button type="button" (click)="addDetalle()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Agregar Producto</button>
+        <button type="submit" [disabled]="!(cotizacionForm.valid && detalles.length>0)" class="bg-green-500 disabled:bg-gray-500 text-white px-4 py-2 rounded-md">Guardar Cotización</button>
+        <button type="button" (click)="goBack()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Atrás</button>
+      </div>
+    </form>
+  </div>
+  

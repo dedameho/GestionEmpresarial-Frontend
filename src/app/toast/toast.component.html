@@ -1,0 +1,15 @@
+<div class="toast-container">
+    <div *ngFor="let toast of toastService.toasts; let i = index"
+      class="fixed bottom-0 left-0 right-0 flex justify-between p-4 bg-green-500 text-white rounded shadow transition-opacity toast"
+      [ngClass]="{
+        'bg-green-500': toast.type === 'success',
+        'bg-red-500': toast.type === 'error'
+      }" [style.opacity]="1 - i * 0.1" [ngStyle]="{ 'margin-bottom': i * 4 + 'rem' }">
+      <div>
+        {{ toast.message }}
+      </div>
+      <button class="text-white" (click)="removeToast(toast)">
+        &times;
+      </button>
+    </div>
+  </div>
