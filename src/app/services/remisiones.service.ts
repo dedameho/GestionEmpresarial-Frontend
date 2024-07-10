@@ -15,7 +15,23 @@ export class RemisionesService {
     return this._http.get<IRemision[]>(`${environment.apiURL}/remisiones`, { params: queryParams })
   }
 
-  createRemision(remisionData:any):Observable<IRemision>{
-    return this._http.post<IRemision>(`${environment.apiURL}/remision`,remisionData)
+  createRemision(remisionData: any): Observable<IRemision> {
+    return this._http.post<IRemision>(`${environment.apiURL}/remision`, remisionData)
+  }
+
+  getRemisionByCotizacion(cotizacionId: number) {
+    return this._http.get<IRemision>(`${environment.apiURL}/remision/cotizacion/${cotizacionId}`)
+  }
+
+  updateRemisionPDF(id: number) {
+    return this._http.put(`${environment.apiURL}/remision/${id}/pdf`, {})
+  }
+
+  signRemision(id: number) {
+    return this._http.patch(`${environment.apiURL}/remision/${id}`, {})
+  }
+
+  deleteRemision(id:number){
+    return this._http.delete(`${environment.apiURL}/remision/${id}`)
   }
 }

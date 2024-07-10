@@ -21,6 +21,10 @@ const routes: Routes = [
     path: 'remisiones',
     loadChildren: () => import('./remisiones/remisiones.module').then(m => m.RemisionesModule),
     data: { title: 'Remisiones' }
+  },
+  {
+    path:'**',
+    redirectTo:'/cotizaciones'
   }
 ];
 

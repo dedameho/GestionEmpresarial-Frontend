@@ -1,2 +1,40 @@
+<div class="container mx-auto p-4">
+    <form [formGroup]="filterForm" (ngSubmit)="onSubmit()" class="flex  gap-4">
+        <div class="flex flex-col">
+            <label for="codigo" class="text-sm font-medium text-gray-700">Código</label>
+            <input type="text" id="clienteNombre" formControlName="codigo"
+                class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+
+        <div class="flex flex-col">
+            <label for="codigoCotizacion" class="text-sm font-medium text-gray-700">Cotización</label>
+            <input type="text" id="codigoCotizacion" formControlName="codigoCotizacion"
+                class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+
+        <div class="flex flex-col">
+            <label for="ordenCompra" class="text-sm font-medium text-gray-700">Orden de Compra</label>
+            <input type="text" id="ordenCompra" formControlName="ordenCompra"
+                class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+
+        <div class="flex flex-col">
+            <label for="fechaInicio" class="text-sm font-medium text-gray-700">Fecha Inicio</label>
+            <input type="date" id="fechaInicio" formControlName="fechaInicio"
+                class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+
+        <div class="flex flex-col">
+            <label for="fechaFin" class="text-sm font-medium text-gray-700">Fecha Fin</label>
+            <input type="date" id="fechaFin" formControlName="fechaFin"
+                class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+
+        <div class="flex items-end">
+            <button type="reset" class="px-4 py-2 bg-blue-600 text-white rounded-md">Limpiar</button>
+        </div>
+    </form>
+</div>
+
 <app-table [columns]="columns" [data]="data" [contextMenuItems]="contextMenuItems" [itemsPerPage]="10"
     [maxPageButtons]="5">></app-table>

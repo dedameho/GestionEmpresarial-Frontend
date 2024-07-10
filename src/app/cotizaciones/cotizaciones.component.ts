@@ -22,10 +22,9 @@ export class CotizacionesComponent implements OnInit {
   data: any = []
 
   contextMenuItems = [
-    { label: 'Editar', action: (row: any) => this.editBudget(row), icon: 'fa-edit' },
-    { label: 'Imprimir', action: (row: any) => this.downloadPDF(row), icon: 'fa-file-pdf' },
-    { label: 'Crear Remision', action: (row: any) => this.createRemision(row), icon: 'fa-shipping-fast' },
-    { label: 'Eliminar', action: (row: any) => this.deleteBudget(row), icon: 'fa-trash text-orange-500' }
+    { label: 'Editar', action: (row: any) => this.editBudget(row), icon: 'fa-edit', visible: (row: any) => true },
+    { label: 'Imprimir', action: (row: any) => this.downloadPDF(row), icon: 'fa-file-pdf', visible: (row: any) => true },
+    { label: 'Eliminar', action: (row: any) => this.deleteBudget(row), icon: 'fa-trash text-orange-500', visible: (row: any) => true }
   ];
 
   columns = [
@@ -108,13 +107,6 @@ export class CotizacionesComponent implements OnInit {
 
   editBudget(row:any){
     this._router.navigate(['/cotizaciones/editar', row.id])
-  }
-
-  createRemision(row:any){
-    this._dialog.open(CrearRemisionComponent,{
-      width:'40vw',
-      data:row.id
-    })
   }
 
 }

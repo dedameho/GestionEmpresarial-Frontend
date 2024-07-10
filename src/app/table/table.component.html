@@ -31,7 +31,7 @@
             <div (mouseleave)="hideProductsContextMenu()" *ngIf="activeRowIndex === i" class="origin-top-right z-10 absolute right-0 mt-1 w-36 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5">
               <div class="py-1">
                 <ng-container *ngFor="let menuItem of contextMenuItems">
-                  <button (click)="onContextMenuClick(menuItem.action, row)" class="w-full text-left px-2 py-1 text-sm text-gray-700 hover:bg-gray-200">
+                  <button *ngIf="menuItem.visible(row)" (click)="onContextMenuClick(menuItem.action, row)" class="w-full text-left px-2 py-1 text-sm text-gray-700 hover:bg-gray-200">
                     <i class="fa-solid {{menuItem.icon}} mr-2"></i>{{ menuItem.label }}
                   </button>
                 </ng-container>

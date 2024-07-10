@@ -9,7 +9,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class TableComponent implements OnInit, OnChanges {
   @Input() columns: { key: string, title: string, isHTML?: boolean, isDate?: boolean }[] = [];
   @Input() data: any[] = [];
-  @Input() contextMenuItems: { label: string, action: (row: any) => void, icon: string | null }[] = [];
+  @Input() contextMenuItems: { label: string, action: (row: any) => void, icon?: string, visible: (row: any) => boolean }[] = [];
   @Input() itemsPerPage: number = 10;
   @Input() maxPageButtons: number = 5;
 

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirm',
@@ -8,6 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ConfirmComponent {
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data:any,
     private _dialog:MatDialogRef<ConfirmComponent>
   ) { }
 

@@ -27,8 +27,8 @@ export class ProductosComponent implements OnInit {
   ];
 
   contextMenuItems = [
-    { label: 'Editar', action: (row: any) => this.editProduct(row), icon: 'fa-edit' },
-    { label: 'Eliminar', action: (row: any) => this.deleteProduct(row), icon: 'fa-trash text-orange-500' }
+    { label: 'Editar', action: (row: any) => this.editProduct(row), icon: 'fa-edit', visible: (row: any) => true },
+    { label: 'Eliminar', action: (row: any) => this.deleteProduct(row), icon: 'fa-trash text-orange-500', visible: (row: any) => true }
   ];
 
   filterForm!: FormGroup;

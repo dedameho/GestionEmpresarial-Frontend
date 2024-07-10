@@ -3,10 +3,16 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router'
 import { CotizacionesService } from '../services/cotizaciones.service';
 import { ICotizacionCompleta } from '../interfaces/cotizaciones.interface';
 import { IProducto } from '../interfaces/productos.interface';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientesService } from '../services/clientes.service';
 import { ProductosService } from '../services/productos.service';
 import { ToastService } from '../services/toast.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CrearRemisionComponent } from '../crear-remision/crear-remision.component';
+import { IRemision } from '../interfaces/remisiones.interface';
+import { RemisionesService } from '../services/remisiones.service';
+import { ConfirmComponent } from '../confirm/confirm.component';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-editar-cotizacion',
@@ -19,14 +25,16 @@ export class EditarCotizacionComponent implements OnInit {
 
   budgetId!: number;
 
-  cotizacion!: ICotizacionCompleta;
+  cotizacion!: ICotizacionCompleta | null;
 
   productos: IProducto[] = []
 
-  estados:{value:string,label:string}[]=[
-    {value:'pendiente',label:'Pendiente'},
-    {value:'aprobada',label:'Aprobada'},
-    {value:'rechazada',label:'Rechazada'},
+  remision!:IRemision;
+
+  estados: { value: string, label: string }[] = [
+    { value: 'pendiente', label: 'Pendiente' },
+    { value: 'aprobada', label: 'Aprobada' },
+    { value: 'rechazada', label: 'Rechazada' },
   ]
 
   constructor(
@@ -36,12 +44,15 @@ export class EditarCotizacionComponent implements OnInit {
     private router: Router,
     private productosService: ProductosService,
     private _toast: ToastService,
+    private _dialog: MatDialog,
+    private _remisionesService:RemisionesService
   ) {
     this.budgetId = this._route.snapshot.params['id'];
   }
 
   ngOnInit(): void {
     this.getBudgetData()
+    this.getRemision()
     this.initForm()
     this.setupDetallesListener();
     this.getProducts()
@@ -95,21 +106,21 @@ export class EditarCotizacionComponent implements OnInit {
 
   addDetalle() {
     const detalleForm = this.fb.group({
-      productoId: ['', [Validators.required]],
-      cantidad: [1, [Validators.required, Validators.min(1)]],
-      precio: ['']
+      productoId: new FormControl('', [Validators.required]),
+      cantidad: new FormControl(1, [Validators.required, Validators.min(1)]),
+      precio: new FormControl('', [Validators.required])
     });
 
     this.detalles.push(detalleForm);
   }
 
   loadDetalle() {
-    this.cotizacion.DetalleCotizacions.map(detalle => {
+    this.cotizacion?.DetalleCotizacions.map(detalle => {
       const detalleForm = this.fb.group({
         id: [detalle.id],
-        productoId: ['', [Validators.required]],
-        cantidad: [1, [Validators.required, Validators.min(1)]],
-        precio: ['']
+        productoId: new FormControl('', [Validators.required]),
+        cantidad: new FormControl(1, [Validators.required, Validators.min(1)]),
+        precio: new FormControl('', [Validators.required])
       });
       detalleForm.patchValue(detalle as any)
       this.detalles.push(detalleForm);
@@ -152,14 +163,46 @@ export class EditarCotizacionComponent implements OnInit {
       }
       delete budget.cotizacion.iva
       delete budget.cotizacion.detalles
-      this._cotizacionesService.editBudget(budget,this.budgetId).subscribe(res => {
+      this._cotizacionesService.editBudget(budget, this.budgetId).subscribe(res => {
         this._toast.showSuccessToast('Cotización actualizada exitosamente')
+        this.detalles.clear()
         this.getBudgetData()
+        this.getRemision()
       })
     } else {
       this.cotizacionForm.markAllAsTouched();
       this._toast.showErrorToast('Se debe agregar al menos un producto')
     }
+  }
+
+  createRemision(id: number) {
+    const dialog = this._dialog.open(CrearRemisionComponent, {
+      width: '40vw',
+      data: id
+    })
+    dialog.afterClosed().subscribe(result=>{
+      if(result){
+        this.getRemision()
+      }
+    })
+  }
+
+  getRemision(){
+    this._remisionesService.getRemisionByCotizacion(this.budgetId).subscribe(res=>{
+      this.remision = res
+    })
+  }
+
+  updateRemision(){
+    const dialog = this._dialog.open(ConfirmComponent)
+    dialog.afterClosed().subscribe(result=>{
+      if(result){
+        this._remisionesService.updateRemisionPDF(this.remision.id).subscribe(res=>{
+          this._toast.showSuccessToast('Remisión actualizada exitosamente')
+          window.open(`${environment.apiURL}/remision/${this.remision.codigo}/pdf`)
+        })
+      }
+    })
   }
 
   goBack() {

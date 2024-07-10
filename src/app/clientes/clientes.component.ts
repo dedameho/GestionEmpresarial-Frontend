@@ -66,8 +66,8 @@ export class ClientesComponent implements OnInit {
   }
 
   contextMenuItems = [
-    { label: 'Editar', action: (row: any) => this.editClient(row), icon: 'fa-edit' },
-    { label: 'Eliminar', action: (row: any) => this.deleteClient(row), icon: 'fa-trash text-orange-500' }
+    { label: 'Editar', action: (row: any) => this.editClient(row), icon: 'fa-edit', visible: (row: any) => true },
+    { label: 'Eliminar', action: (row: any) => this.deleteClient(row), icon: 'fa-trash text-orange-500', visible: (row: any) => true }
   ];
 
 

@@ -5,6 +5,7 @@ import { RemisionesRoutingModule } from './remisiones-routing.module';
 import { RemisionesComponent } from './remisiones.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from '../table/table.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { TableModule } from '../table/table.module';
     CommonModule,
     RemisionesRoutingModule,
     ReactiveFormsModule,
-    TableModule
+    TableModule,
+    MatDialogModule
   ]
 })
 export class RemisionesModule { }

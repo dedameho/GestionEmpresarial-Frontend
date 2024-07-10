@@ -50,7 +50,7 @@
               </div>
               <div class="w-1/5 mt-2 md:mt-0">
                 <label class="text-sm font-medium text-gray-700">Cantidad</label>
-                <input type="number" formControlName="cantidad"
+                <input type="number" formControlName="cantidad" 
                        class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               </div>
               <div class="w-1/5 mt-2 md:mt-0">
@@ -64,7 +64,9 @@
         </ng-container>
       </div>
       <div class="flex justify-center space-x-4">
-        <button type="button" (click)="addDetalle()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Agregar Producto</button>
+        <button *ngIf="cotizacion.estado=='aprobada' && !remision" type="button" (click)="createRemision(cotizacion.id)" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crear Remisión</button>
+        <button *ngIf="cotizacion.estado=='aprobada' && remision" type="button" (click)="updateRemision()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Actualizar Remisión</button>
+        <button *ngIf="cotizacion.estado=='pendiente'" type="button" (click)="addDetalle()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Agregar Producto</button>
         <button type="submit" [disabled]="!(cotizacionForm.valid && detalles.length>0)" class="bg-green-500 disabled:bg-gray-500 text-white px-4 py-2 rounded-md">Actualizar Cotización</button>
         <button type="button" (click)="goBack()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Atrás</button>
       </div>
